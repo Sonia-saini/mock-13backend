@@ -6,7 +6,14 @@ const { connection } = require("./src/config/db");
 const { userRouter } = require("./src/user/Userroute");
 const { sprintRouter } = require("./src/sprintplan/SprintRoute");
 const { taskRouter } = require("./src/task/Taskroute");
-app.use(cors());
+
+const corsOptions = {
+  origin:'http://localhost:3000',
+  optionsSuccessStatus: 200,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.get("/",(req,res)=>{
     res.send("welcome paypal")
