@@ -47,7 +47,7 @@ userRouter.post("/register", registerValidator, async (req, res) => {
     }
   } catch (error) {
     console.log("Some Error occurred, unable to Register.");
-    res.status(401).send(error);
+    res.status(401).send("Some Error occurred, unable to Register.");
   }
 });
 
