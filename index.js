@@ -1,24 +1,35 @@
-const { json } = require("express");
 const express=require("express");
-const { connection } = require("./Configs/db");
-const { userRouter } = require("./Routes/UserRoutes");
-const cors=require("cors")
 const app=express();
+require("dotenv").config();
+
+const cors=require("cors");
+const { connection } = require("./src/config/db");
+const { userRouter } = require("./src/user/Userroute");
+const { sprintRouter } = require("./src/sprintplan/SprintRoute");
+const { taskRouter } = require("./src/task/Taskroute");
 app.use(cors());
-
-app.use(express.json())
-
+app.use(express.json());
 app.get("/",(req,res)=>{
-    res.send("welcome home")
+    res.send("welcome paypal")
 })
 app.use("/",userRouter)
-app.listen(3400,async()=>{
-    try{
-        await connection
-        console.log("db is connected")
+app.use("/",sprintRouter)
+app.use("/",taskRouter)
+app.listen(process.env.PORT, async () => {
+    try {
+      await connection;
+      console.log("db is connected");
+    } catch (err) {
+      console.log("db connection have error");
     }
-    catch(err){
-        console.log("db connection error")
-    }
-    console.log("server is running on port 3400")
-})
+    console.log(`server is running on port ${process.env.PORT}`);
+  });
+  // {
+  //   "type":"Bug",
+  //  "assignee":"soni",
+  //  "status":"todo",
+  //  "task":"resolve bug",
+  //  "sprint":"sprint1",
+  //  "batch":"web-19"
+    
+  // }
